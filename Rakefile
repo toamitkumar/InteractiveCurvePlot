@@ -7,7 +7,7 @@ Bundler.require :default
 
 Motion::Project::App.setup do |app|
   # Use `rake config' to see complete project settings.
-  app.name = 'curve_plot'
+  app.name = 'interactive_curve_plot'
 
   app.device_family = :ipad
   app.interface_orientations = [:landscape_left, :landscape_right]
