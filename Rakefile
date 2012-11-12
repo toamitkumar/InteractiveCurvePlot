@@ -14,6 +14,8 @@ Motion::Project::App.setup do |app|
 
   app.frameworks << "QuartzCore"
 
+  app.info_plist['NSMainNibFile'] = "MainWindow"
+
   app.pods do
     pod "CorePlot"
   end

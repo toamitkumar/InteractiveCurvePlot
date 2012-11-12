@@ -1,0 +1,3 @@
+class PlotLabel < UILabel
+  
+end
