@@ -4,8 +4,6 @@ class PlotTheme < CPTTheme
     "SampleTheme"
   end
 
-  026701007589
-
   def applyThemeToAxisSet(axisSet)
     title_text = CPTMutableTextStyle.textStyle
     title_text.color = CPTColor.blackColor

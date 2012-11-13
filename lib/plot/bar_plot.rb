@@ -1,5 +1,22 @@
 class BarPlot
 
+  attr_accessor :sampleData, :sampleProduct
+
+  def init
+    if(super)
+      @sampleData = [0, 2000, 5000, 3000, 7000, 8500]
+
+      @sampleProduct = ["", "A", "B", "C", "D", "E"]
+
+# // Initialize the currency formatter to support negative with the default currency style.
+# currencyFormatter = [[NSNumberFormatter alloc] init];
+# [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+# [currencyFormatter setNegativePrefix:@"-"];
+# [currencyFormatter setNegativeSuffix:@""];
+    end
+    self
+  end
+
   def renderInLayer(layerHostingView, withTheme:theme)
     bounds = layerHostingView.bounds
 
@@ -49,58 +66,58 @@ class BarPlot
     # Use custom x-axis label so it will display product A, B, C... instead of 1, 2, 3, 4
     labels = []
 
-    sample_product.each do |product|
+    sample_product.each_wiht_index do |product, index|
       label = CPTAxisLabel.alloc.initWithText(product, textStyle:x.labelTextStyle)
-      label.tickLocation = CPTDecimalFromInt(idx)
+      label.tickLocation = CPTDecimalFromInt(index)
       label.offset = 5.0
       labels << label
     end
     x.axisLabels = NSSet.setWithArray(labels)
     
-    // Setting up y-axis
-  CPTXYAxis *y = axisSet.yAxis
+    # Setting up y-axis
+    y = axisSet.yAxis
     y.majorIntervalLength = CPTDecimalFromInt(1000)
     y.minorTicksPerInterval = 0
     y.minorGridLineStyle = nil
-    y.title = @"Cost Per Unit"
-    y.labelExclusionRanges = [NSArray arrayWithObjects:[CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(0) length:CPTDecimalFromInt(0)], nil]
+    y.title = "Cost Per Unit"
+    y.labelExclusionRanges = NSArray.arrayWithObjects(CPTPlotRange.plotRangeWithLocation(CPTDecimalFromInt(0),length:CPTDecimalFromInt(0)))
     
-    barChart = [[CPTBarPlot alloc] init]
-    barChart.fill = [CPTFill fillWithColor:[CPTColor colorWithComponentRed:0.22f green:0.55f blue:0.71f alpha:0.4f]]
+    barChart = CPTBarPlot.alloc.init
+    barChart.fill = CPTFill.fillWithColor(CPTColor.colorWithComponentRed(0.22, green:0.55, blue:0.71, alpha:0.4))
     
-    CPTMutableLineStyle *borderLineStyle = [CPTMutableLineStyle lineStyle]
-  borderLineStyle.lineWidth = 2.f
-    borderLineStyle.lineColor = [CPTColor colorWithComponentRed:0.22f green:0.55f blue:0.71f alpha:1.0f]
+    borderLineStyle = CPTMutableLineStyle.lineStyle
+    borderLineStyle.lineWidth = 2
+    borderLineStyle.lineColor = CPTColor.colorWithComponentRed(0.22, green:0.55, blue:0.71, alpha:1.0)
 
     
     barChart.lineStyle = borderLineStyle
-    barChart.barWidth = CPTDecimalFromString(@"0.6")
-    barChart.baseValue = CPTDecimalFromString(@"0")
+    barChart.barWidth = CPTDecimalFromString("0.6")
+    barChart.baseValue = CPTDecimalFromString("0")
     
     barChart.dataSource = self
-    barChart.barCornerRadius = 2.0f
+    barChart.barCornerRadius = 2.0
     barChart.identifier = kDefaultPlot
     barChart.delegate = self
-    [graph addPlot:barChart toPlotSpace:plotSpace]
+    graph.addPlot(barChart, toPlotSpace:plotSpace)
     
-    //selected Plot
-    selectedPlot = [[CPTBarPlot alloc] init]
-    selectedPlot.fill = [CPTFill fillWithColor:[[CPTColor orangeColor] colorWithAlphaComponent:0.35f]]
+    # selected Plot
+    selectedPlot = CPTBarPlot.alloc.init
+    selectedPlot.fill = CPTFill.fillWithColor(CPTColor.orangeColor, colorWithAlphaComponent:0.35)
     
-    CPTMutableLineStyle *selectedBorderLineStyle = [CPTMutableLineStyle lineStyle]
-  selectedBorderLineStyle.lineWidth = 3.0f
-    selectedBorderLineStyle.lineColor = [CPTColor orangeColor]
-    selectedBorderLineStyle.dashPattern = [NSArray arrayWithObjects:[NSNumber numberWithFloat:10.0f], [NSNumber numberWithFloat:8.0f], nil]
+    selectedBorderLineStyle = CPTMutableLineStyle.lineStyle
+    selectedBorderLineStyle.lineWidth = 3.0
+    selectedBorderLineStyle.lineColor = CPTColor.orangeColor
+    selectedBorderLineStyle.dashPattern = NSArray.arrayWithObjects(NSNumber.numberWithFloat(10.0), NSNumber.numberWithFloat(8.0))
     
     selectedPlot.lineStyle = selectedBorderLineStyle
-    selectedPlot.barWidth = CPTDecimalFromString(@"0.6")
-    selectedPlot.baseValue = CPTDecimalFromString(@"0")
+    selectedPlot.barWidth = CPTDecimalFromString("0.6")
+    selectedPlot.baseValue = CPTDecimalFromString("0")
     
     selectedPlot.dataSource = self
-    selectedPlot.barCornerRadius = 2.0f
+    selectedPlot.barCornerRadius = 2.0
     selectedPlot.identifier = kSelectedPlot
     selectedPlot.delegate = self
-    [graph addPlot:selectedPlot toPlotSpace:plotSpace]
+    graph.addPlot(selectedPlot, toPlotSpace:plotSpace)
   end
 
 end

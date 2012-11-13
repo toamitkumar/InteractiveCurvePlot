@@ -12,6 +12,8 @@ Motion::Project::App.setup do |app|
   app.device_family = :ipad
   app.interface_orientations = [:landscape_left, :landscape_right]
 
+  app.files.unshift(Dir.glob("./lib/**/*.rb"))
+
   app.frameworks << "QuartzCore"
 
   app.info_plist['NSMainNibFile'] = "MainWindow"
