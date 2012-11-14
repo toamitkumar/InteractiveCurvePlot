@@ -7,8 +7,11 @@ class CorePlotViewController < UIViewController
 
 
     default_theme = PlotTheme.alloc.init
+
+p "666666"
+
     bar_plot = BarPlot.alloc.init
-    # bar_plot.delegate = self
+    bar_plot.delegate = self
     bar_plot.renderInLayer(barHostingView, withTheme:default_theme)
 
 

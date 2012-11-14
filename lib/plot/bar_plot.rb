@@ -1,10 +1,15 @@
 class BarPlot
 
-  attr_accessor :sampleData, :sampleProduct
+  attr_accessor :sampleData, :sampleProduct, :delegate, :selectedBarIndex
 
   def init
     if(super)
-      @sampleData = [0, 2000, 5000, 3000, 7000, 8500]
+      @sampleData = [0, 2000, 5000, 3000, 7000, 8500] #NSArray.alloc.initWithObjects(NSNumber.numberWithInt(0),NSNumber.numberWithInt(2000), 
+                                                      #NSNumber.numberWithInt(5000), 
+                                                      #NSNumber.numberWithInt(3000), 
+                                                      #NSNumber.numberWithInt(7000),
+                                                      #NSNumber.numberWithInt(8500),
+                                                      #nil)  #[0, 2000, 5000, 3000, 7000, 8500]
 
       @sampleProduct = ["", "A", "B", "C", "D", "E"]
 
@@ -13,6 +18,8 @@ class BarPlot
 # [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
 # [currencyFormatter setNegativePrefix:@"-"];
 # [currencyFormatter setNegativeSuffix:@""];
+
+      @selectedBarIndex = nil
     end
     self
   end
@@ -23,7 +30,9 @@ class BarPlot
     # create and assign chart to the hosting view.
     graph = CPTXYGraph.alloc.initWithFrame(bounds)
     layerHostingView.hostedGraph = graph
-    graph.applyTheme(theme)
+    graph.applyTheme(CPTTheme.themeNamed KCPTDarkGradientTheme)
+    # self.theme = CPTTheme.themeNamed KCPTDarkGradientTheme
+    # graph.applyTheme(theme)
     
     graph.plotAreaFrame.masksToBorder = false
     
@@ -34,22 +43,20 @@ class BarPlot
     
     
     # chang the chart layer orders so the axis line is on top of the bar in the chart.
-    chart_layers = [
-      NSNumber.numberWithInt(CPTGraphLayerTypeAxisLines),  
-      NSNumber.numberWithInt(CPTGraphLayerTypePlots),
-      NSNumber.numberWithInt(CPTGraphLayerTypeMajorGridLines),
-      NSNumber.numberWithInt(CPTGraphLayerTypeMajorGridLines),
-      NSNumber.numberWithInt(CPTGraphLayerTypeMinorGridLines),
-      NSNumber.numberWithInt(CPTGraphLayerTypeAxisLabels),
-      NSNumber.numberWithInt(CPTGraphLayerTypeAxisTitles)
-    ]
-    graph.topDownLayerOrder = chart_layers
+    @chart_layers = [NSNumber.numberWithInt(CPTGraphLayerTypeAxisLines), NSNumber.numberWithInt(CPTGraphLayerTypePlots), NSNumber.numberWithInt(CPTGraphLayerTypeMajorGridLines), NSNumber.numberWithInt(CPTGraphLayerTypeMinorGridLines), NSNumber.numberWithInt(CPTGraphLayerTypeAxisLabels), NSNumber.numberWithInt(CPTGraphLayerTypeAxisTitles)]
+    graph.topDownLayerOrder = @chart_layers
     
     
     # Add plot space for horizontal bar charts
     plotSpace = graph.defaultPlotSpace
-    plotSpace.yRange = CPTPlotRange.plotRangeWithLocation(CPTDecimalFromInt(0), length:CPTDecimalFromInt(10000))
-    plotSpace.xRange = CPTPlotRange.plotRangeWithLocation(CPTDecimalFromInt(0), length:CPTDecimalFromInt(6))
+    y_plot_range = CPTPlotRange.alloc.init
+    y_plot_range.location = CPTDecimalFromInt(0)
+    y_plot_range.length = CPTDecimalFromInt(10000)
+    plotSpace.yRange = y_plot_range # CPTPlotRange.plotRangeWithLocation(CPTDecimalFromInt(0), length:CPTDecimalFromInt(10000))
+    x_plot_range = CPTPlotRange.alloc.init
+    x_plot_range.location = CPTDecimalFromInt(0)
+    x_plot_range.length = CPTDecimalFromInt(6)
+    plotSpace.xRange = x_plot_range # CPTPlotRange.plotRangeWithLocation(CPTDecimalFromInt(0), length:CPTDecimalFromInt(6))
     
     # Setting X-Axis
     axisSet = graph.axisSet
@@ -61,16 +68,22 @@ class BarPlot
     x.minorTickLineStyle = nil
     x.majorIntervalLength = CPTDecimalFromString("1")
     x.orthogonalCoordinateDecimal = CPTDecimalFromString("0")
-    x.labelExclusionRanges = NSArray.arrayWithObjects(CPTPlotRange.plotRangeWithLocation(CPTDecimalFromInt(6), length:CPTDecimalFromInt(1)))
+    x_label_exclusion_range = CPTPlotRange.alloc.init
+    x_label_exclusion_range.location = CPTDecimalFromInt(6)
+    x_label_exclusion_range.length = CPTDecimalFromInt(1)
+    x.labelExclusionRanges = [x_label_exclusion_range] #NSArray.arrayWithObjects(CPTPlotRange.plotRangeWithLocation(CPTDecimalFromInt(6), length:CPTDecimalFromInt(1)))
     
     # Use custom x-axis label so it will display product A, B, C... instead of 1, 2, 3, 4
-    labels = []
+    p x.labelTextStyle
 
-    sample_product.each_wiht_index do |product, index|
-      label = CPTAxisLabel.alloc.initWithText(product, textStyle:x.labelTextStyle)
+    labels = @sampleProduct.each_with_index.map do |product, index|
+        p product
+        p index
+
+      label = CPTAxisLabel.alloc.initWithText(product, textStyle: x.labelTextStyle)
       label.tickLocation = CPTDecimalFromInt(index)
       label.offset = 5.0
-      labels << label
+      label
     end
     x.axisLabels = NSSet.setWithArray(labels)
     
@@ -80,7 +93,10 @@ class BarPlot
     y.minorTicksPerInterval = 0
     y.minorGridLineStyle = nil
     y.title = "Cost Per Unit"
-    y.labelExclusionRanges = NSArray.arrayWithObjects(CPTPlotRange.plotRangeWithLocation(CPTDecimalFromInt(0),length:CPTDecimalFromInt(0)))
+    y_label_exclusion_range = CPTPlotRange.alloc.init
+    y_label_exclusion_range.location = CPTDecimalFromInt(0)
+    y_label_exclusion_range.length = CPTDecimalFromInt(0)
+    y.labelExclusionRanges = [y_label_exclusion_range] #NSArray.arrayWithObjects(CPTPlotRange.plotRangeWithLocation(CPTDecimalFromInt(0),length:CPTDecimalFromInt(0)))
     
     barChart = CPTBarPlot.alloc.init
     barChart.fill = CPTFill.fillWithColor(CPTColor.colorWithComponentRed(0.22, green:0.55, blue:0.71, alpha:0.4))
@@ -96,7 +112,7 @@ class BarPlot
     
     barChart.dataSource = self
     barChart.barCornerRadius = 2.0
-    barChart.identifier = kDefaultPlot
+    barChart.identifier = "default"
     barChart.delegate = self
     graph.addPlot(barChart, toPlotSpace:plotSpace)
     
@@ -107,7 +123,7 @@ class BarPlot
     selectedBorderLineStyle = CPTMutableLineStyle.lineStyle
     selectedBorderLineStyle.lineWidth = 3.0
     selectedBorderLineStyle.lineColor = CPTColor.orangeColor
-    selectedBorderLineStyle.dashPattern = NSArray.arrayWithObjects(NSNumber.numberWithFloat(10.0), NSNumber.numberWithFloat(8.0))
+    selectedBorderLineStyle.dashPattern = [10, 8] #NSArray.arrayWithObjects(NSNumber.numberWithFloat(10.0), NSNumber.numberWithFloat(8.0))
     
     selectedPlot.lineStyle = selectedBorderLineStyle
     selectedPlot.barWidth = CPTDecimalFromString("0.6")
@@ -115,9 +131,55 @@ class BarPlot
     
     selectedPlot.dataSource = self
     selectedPlot.barCornerRadius = 2.0
-    selectedPlot.identifier = kSelectedPlot
+    selectedPlot.identifier = "selected"
     selectedPlot.delegate = self
     graph.addPlot(selectedPlot, toPlotSpace:plotSpace)
+  end
+
+  def dataLabelForPlot(plot, recordIndex:index)
+
+    # "Selected #{index}"
+
+    # if(index == @selectedBarIndex and plot.identifier == "selected")
+    #   selectedText = CPTTextLayer.layer
+    #   selectedText.text = 
+    # end
+
+    # if (index == selectedBarIndex && [plot.identifier isEqual:kSelectedPlot]) 
+    # {
+    #     CPTTextLayer *selectedText = [CPTTextLayer layer];
+    #     selectedText.text = [currencyFormatter stringFromNumber:[sampleData objectAtIndex:index]];
+    #     CPTMutableTextStyle *labelTextStyle = [CPTMutableTextStyle textStyle];
+    #     labelTextStyle.fontSize = 16;
+    #     labelTextStyle.color = [CPTColor purpleColor];
+    #     selectedText.textStyle = labelTextStyle;
+    #     return selectedText;
+    # }
+  end
+
+  def numberOfRecordsForPlot(plot)
+    @sampleProduct.size
+  end
+
+  def numberForPlot(plot, field:fieldEnum, recordIndex:index)
+    return nil if(index == 0)
+
+    p fieldEnum
+    num = nil
+    if(fieldEnum == CPTBarPlotFieldBarLocation)
+      num = index
+    elsif(fieldEnum == CPTBarPlotFieldBarTip)
+      if(plot.identifier == "default" or (plot.identifier == "selected" && index == @selectedBarIndex))
+        num = @sampleData[index]
+      end
+    end
+    num
+  end
+
+  def barPlot(plot, barWasSelectedAtRecordIndex:index)
+    @selectedBarIndex = index
+    graph.reloadData
+    # self.delegate
   end
 
 end
