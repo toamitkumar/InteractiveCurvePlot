@@ -1,0 +1,302 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		188595FA16541511003493A6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 188595F916541511003493A6 /* UIKit.framework */; };
+		188595FC16541511003493A6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 188595FB16541511003493A6 /* Foundation.framework */; };
+		188595FE16541511003493A6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 188595FD16541511003493A6 /* CoreGraphics.framework */; };
+		1885960416541511003493A6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1885960216541511003493A6 /* InfoPlist.strings */; };
+		1885960616541511003493A6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1885960516541511003493A6 /* main.m */; };
+		1885960A16541511003493A6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1885960916541511003493A6 /* AppDelegate.m */; };
+		1885960C16541511003493A6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1885960B16541511003493A6 /* Default.png */; };
+		1885960E16541511003493A6 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1885960D16541511003493A6 /* Default@2x.png */; };
+		1885961016541511003493A6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1885960F16541511003493A6 /* Default-568h@2x.png */; };
+		1885962116541772003493A6 /* CurvePlotController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1885961F16541772003493A6 /* CurvePlotController.m */; };
+		18D21F54165417D600608ADD /* CurvePlotController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D21F52165417D600608ADD /* CurvePlotController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		188595F516541511003493A6 /* CurvePlot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurvePlot.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		188595F916541511003493A6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		188595FB16541511003493A6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		188595FD16541511003493A6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		1885960116541511003493A6 /* CurvePlot-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CurvePlot-Info.plist"; sourceTree = "<group>"; };
+		1885960316541511003493A6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1885960516541511003493A6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1885960716541511003493A6 /* CurvePlot-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CurvePlot-Prefix.pch"; sourceTree = "<group>"; };
+		1885960816541511003493A6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1885960916541511003493A6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1885960B16541511003493A6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		1885960D16541511003493A6 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		1885960F16541511003493A6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		1885961F16541772003493A6 /* CurvePlotController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurvePlotController.m; sourceTree = "<group>"; };
+		1885962016541772003493A6 /* CurvePlotController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurvePlotController.h; sourceTree = "<group>"; };
+		18D21F53165417D600608ADD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CurvePlotController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		188595F216541511003493A6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				188595FA16541511003493A6 /* UIKit.framework in Frameworks */,
+				188595FC16541511003493A6 /* Foundation.framework in Frameworks */,
+				188595FE16541511003493A6 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		188595EA16541511003493A6 = {
+			isa = PBXGroup;
+			children = (
+				188595FF16541511003493A6 /* CurvePlot */,
+				188595F816541511003493A6 /* Frameworks */,
+				188595F616541511003493A6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		188595F616541511003493A6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				188595F516541511003493A6 /* CurvePlot.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		188595F816541511003493A6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				188595F916541511003493A6 /* UIKit.framework */,
+				188595FB16541511003493A6 /* Foundation.framework */,
+				188595FD16541511003493A6 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		188595FF16541511003493A6 /* CurvePlot */ = {
+			isa = PBXGroup;
+			children = (
+				18D21F52165417D600608ADD /* CurvePlotController.xib */,
+				1885961F16541772003493A6 /* CurvePlotController.m */,
+				1885962016541772003493A6 /* CurvePlotController.h */,
+				1885960816541511003493A6 /* AppDelegate.h */,
+				1885960916541511003493A6 /* AppDelegate.m */,
+				1885960016541511003493A6 /* Supporting Files */,
+			);
+			path = CurvePlot;
+			sourceTree = "<group>";
+		};
+		1885960016541511003493A6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1885960116541511003493A6 /* CurvePlot-Info.plist */,
+				1885960216541511003493A6 /* InfoPlist.strings */,
+				1885960516541511003493A6 /* main.m */,
+				1885960716541511003493A6 /* CurvePlot-Prefix.pch */,
+				1885960B16541511003493A6 /* Default.png */,
+				1885960D16541511003493A6 /* Default@2x.png */,
+				1885960F16541511003493A6 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		188595F416541511003493A6 /* CurvePlot */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1885961916541511003493A6 /* Build configuration list for PBXNativeTarget "CurvePlot" */;
+			buildPhases = (
+				188595F116541511003493A6 /* Sources */,
+				188595F216541511003493A6 /* Frameworks */,
+				188595F316541511003493A6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CurvePlot;
+			productName = CurvePlot;
+			productReference = 188595F516541511003493A6 /* CurvePlot.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		188595EC16541511003493A6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Amit Kumar";
+			};
+			buildConfigurationList = 188595EF16541511003493A6 /* Build configuration list for PBXProject "CurvePlot" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 188595EA16541511003493A6;
+			productRefGroup = 188595F616541511003493A6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				188595F416541511003493A6 /* CurvePlot */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		188595F316541511003493A6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1885960416541511003493A6 /* InfoPlist.strings in Resources */,
+				1885960C16541511003493A6 /* Default.png in Resources */,
+				1885960E16541511003493A6 /* Default@2x.png in Resources */,
+				1885961016541511003493A6 /* Default-568h@2x.png in Resources */,
+				18D21F54165417D600608ADD /* CurvePlotController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		188595F116541511003493A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1885960616541511003493A6 /* main.m in Sources */,
+				1885960A16541511003493A6 /* AppDelegate.m in Sources */,
+				1885962116541772003493A6 /* CurvePlotController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		1885960216541511003493A6 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1885960316541511003493A6 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		18D21F52165417D600608ADD /* CurvePlotController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				18D21F53165417D600608ADD /* en */,
+			);
+			name = CurvePlotController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1885961716541511003493A6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		1885961816541511003493A6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1885961A16541511003493A6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CurvePlot/CurvePlot-Prefix.pch";
+				INFOPLIST_FILE = "CurvePlot/CurvePlot-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		1885961B16541511003493A6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CurvePlot/CurvePlot-Prefix.pch";
+				INFOPLIST_FILE = "CurvePlot/CurvePlot-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		188595EF16541511003493A6 /* Build configuration list for PBXProject "CurvePlot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1885961716541511003493A6 /* Debug */,
+				1885961816541511003493A6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1885961916541511003493A6 /* Build configuration list for PBXNativeTarget "CurvePlot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1885961A16541511003493A6 /* Debug */,
+				1885961B16541511003493A6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 188595EC16541511003493A6 /* Project object */;
+}

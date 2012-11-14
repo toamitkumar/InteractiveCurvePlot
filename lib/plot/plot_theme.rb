@@ -34,8 +34,6 @@ class PlotTheme < CPTTheme
     minor_grid_line_style.lineWidth = 1.0
     minor_grid_line_style.lineColor = CPTColor.blackColor #(colorWithAlphaComponent:0.15)
 
-p "1111111"
-
     x_label_text_style = CPTMutableTextStyle.textStyle
     x_label_text_style.color = CPTColor.blackColor
     x_label_text_style.fontSize = 16
@@ -47,8 +45,6 @@ p "1111111"
     minor_tick_white_text_style = CPTMutableTextStyle.alloc.init
     minor_tick_white_text_style.color = CPTColor.blackColor
     minor_tick_white_text_style.fontSize = 12.0
-
-p "222222"
 
     x = axisSet.xAxis
     white_text_style = CPTMutableTextStyle.alloc.init
@@ -69,8 +65,6 @@ p "222222"
     x.minorTickLabelTextStyle = white_text_style 
     x.titleTextStyle = title_text
 
-p "33333"
-
     y = axisSet.yAxis
     y.labelingPolicy = CPTAxisLabelingPolicyFixedInterval
     y.majorIntervalLength = CPTDecimalFromDouble(0.5)
@@ -88,8 +82,6 @@ p "33333"
     y.minorTickLabelTextStyle = minor_tick_white_text_style 
     y.titleTextStyle = title_text
     y.titleOffset = 58.0
-
-p "444444"
 
     @currency_formatter = NSNumberFormatter.alloc.init
     @currency_formatter.setNumberStyle(NSNumberFormatterCurrencyStyle)

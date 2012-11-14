@@ -4,12 +4,7 @@ class BarPlot
 
   def init
     if(super)
-      @sampleData = [0, 2000, 5000, 3000, 7000, 8500] #NSArray.alloc.initWithObjects(NSNumber.numberWithInt(0),NSNumber.numberWithInt(2000), 
-                                                      #NSNumber.numberWithInt(5000), 
-                                                      #NSNumber.numberWithInt(3000), 
-                                                      #NSNumber.numberWithInt(7000),
-                                                      #NSNumber.numberWithInt(8500),
-                                                      #nil)  #[0, 2000, 5000, 3000, 7000, 8500]
+      @sampleData = [0, 2000, 5000, 3000, 7000, 8500]
 
       @sampleProduct = ["", "A", "B", "C", "D", "E"]
 
@@ -30,9 +25,9 @@ class BarPlot
     # create and assign chart to the hosting view.
     graph = CPTXYGraph.alloc.initWithFrame(bounds)
     layerHostingView.hostedGraph = graph
-    graph.applyTheme(CPTTheme.themeNamed KCPTDarkGradientTheme)
+    # graph.applyTheme(CPTTheme.themeNamed KCPTDarkGradientTheme)
     # self.theme = CPTTheme.themeNamed KCPTDarkGradientTheme
-    # graph.applyTheme(theme)
+    graph.applyTheme(theme)
     
     graph.plotAreaFrame.masksToBorder = false
     
