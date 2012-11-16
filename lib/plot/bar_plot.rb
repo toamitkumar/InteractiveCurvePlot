@@ -69,8 +69,6 @@ class BarPlot
     x.labelExclusionRanges = [x_label_exclusion_range] #NSArray.arrayWithObjects(CPTPlotRange.plotRangeWithLocation(CPTDecimalFromInt(6), length:CPTDecimalFromInt(1)))
     
     # Use custom x-axis label so it will display product A, B, C... instead of 1, 2, 3, 4
-    p x.labelTextStyle
-
     labels = @sampleProduct.each_with_index.map do |product, index|
         p product
         p index
