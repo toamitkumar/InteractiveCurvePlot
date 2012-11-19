@@ -1,10 +1,10 @@
 class LinePlot
 
-  attr_accessor :delegate, :sample_data, :sample_years, :selected_coordination, :line_plot, :touch_plot
+  attr_accessor :delegate, :sample_data, :sample_years, :selected_coordination, :line_plot, :touch_plot, :touch_plot_selected, :graph
 
   def init
     if(super)
-      @sample_date = [6000, 3000, 4500, 2000, 3400, 2100, 1000]
+      @sample_data = [6000, 3000, 4500, 2000, 3400, 2100, 1000]
       @sample_years = ["2010", "2011", "2012", "2013", "2014", "2015", "2016"]
     end
 
@@ -12,32 +12,32 @@ class LinePlot
   end
 
   def renderInLayer(layer_hosting_view, withTheme:theme)
-    bounds = layerHostingView.bounds
+    bounds = layer_hosting_view.bounds
 
     # create and assign chart to the hosting view.
-    graph = CPTXYGraph.alloc.initWithFrame(bounds)
-    layerHostingView.hostedGraph = graph
+    @graph = CPTXYGraph.alloc.initWithFrame(bounds)
+    layer_hosting_view.hostedGraph = @graph
     # graph.applyTheme(CPTTheme.themeNamed KCPTDarkGradientTheme)
     # self.theme = CPTTheme.themeNamed KCPTDarkGradientTheme
-    graph.applyTheme(theme)
+    @graph.applyTheme(theme)
     
-    graph.plotAreaFrame.masksToBorder = false
+    @graph.plotAreaFrame.masksToBorder = false
     
-    graph.paddingLeft = 90.0
-    graph.paddingTop = 50.0
-    graph.paddingRight = 20.0
-    graph.paddingBottom = 60.0
+    @graph.paddingLeft = 90.0
+    @graph.paddingTop = 50.0
+    @graph.paddingRight = 20.0
+    @graph.paddingBottom = 60.0
     
     
     # chang the chart layer orders so the axis line is on top of the bar in the chart.
     @chart_layers = [NSNumber.numberWithInt(CPTGraphLayerTypePlots), NSNumber.numberWithInt(CPTGraphLayerTypeMajorGridLines), NSNumber.numberWithInt(CPTGraphLayerTypeMinorGridLines), NSNumber.numberWithInt(CPTGraphLayerTypeAxisLines), NSNumber.numberWithInt(CPTGraphLayerTypeAxisLabels), NSNumber.numberWithInt(CPTGraphLayerTypeAxisTitles)]
-    graph.topDownLayerOrder = @chart_layers
+    @graph.topDownLayerOrder = @chart_layers
     
     
     # Add plot space for horizontal bar charts
-    plot_space = graph.defaultPlotSpace
+    plot_space = @graph.defaultPlotSpace
     plot_space.delegate = self
-    plot_space.allowUserInteraction = true
+    plot_space.allowsUserInteraction = true
     y_plot_range = CPTPlotRange.alloc.init
     y_plot_range.location = CPTDecimalFromInt(0)
     y_plot_range.length = CPTDecimalFromInt(10000)
@@ -51,7 +51,7 @@ class LinePlot
     major_x_grid_line_style.lineWidth = 1.0
     major_x_grid_line_style.lineColor = CPTColor.grayColor.colorWithAlphaComponent(0.25)
 
-    axisSet = graph.axisSet
+    axisSet = @graph.axisSet
     x = axisSet.xAxis
     x.labelingPolicy = CPTAxisLabelingPolicyNone
     x.majorGridLineStyle = major_x_grid_line_style
@@ -103,9 +103,9 @@ class LinePlot
     high_plot.dataSource = self
   
     area_fill = CPTFill.fillWithColor(CPTColor.colorWithComponentRed(0.50, green:0.67, blue:0.65, alpha:0.4))
-    high_plot.areaFill = areaFill
+    high_plot.areaFill = area_fill
     high_plot.areaBaseValue = CPTDecimalFromString("0")
-    graph.addPlot(high_plot)
+    @graph.addPlot(high_plot)
 
     @selected_coordination = 2
 
@@ -114,7 +114,7 @@ class LinePlot
     @touch_plot.dataSource = self
     @touch_plot.delegate = self
     applyTouchPlotColor
-    graph.addPlot(@touch_plot)
+    @graph.addPlot(@touch_plot)
   end
 
   # Assign different color to the touchable line symbol.
@@ -130,7 +130,7 @@ class LinePlot
     touch_plot_symbol.size = CGSizeMake(15.0, 15.0)
     
     
-    touchPlot.plotSymbol = touch_plot_symbol;
+    @touch_plot.plotSymbol = touch_plot_symbol
     
     touch_line_style = CPTMutableLineStyle.lineStyle
     touch_line_style.lineColor = CPTColor.orangeColor
@@ -151,14 +151,88 @@ class LinePlot
     plot_symbol.lineStyle = symbol_line_style
     plot_symbol.size = CGSizeMake(15.0, 15.0)
     
-    plot.plotSymbol = plot_symbol;
+    plot.plotSymbol = plot_symbol
     
-    CPTMutableLineStyle *selectedLineStyle = [CPTMutableLineStyle lineStyle];
-    selectedLineStyle.lineColor = [CPTColor yellowColor];
-    selectedLineStyle.lineWidth = 5.0f;
+    selected_line_style = CPTMutableLineStyle.lineStyle
+    selected_line_style.lineColor = CPTColor.yellowColor
+    selected_line_style.lineWidth = 5.0
     
-    plot.dataLineStyle = selectedLineStyle;
+    plot.dataLineStyle = selected_line_style
   end
 
+  # This implementation of this method will put the line graph in a fix position so it won't be scrollable.
+  def plotSpace(space, willChangePlotRangeTo:new_range, forCoordinate:coordinate)
+    (coordinate == CPTCoordinateY) ? space.yRange : space.xRange
+  end
 
+  # This method is called when user touch & drag on the plot space.
+  def plotSpace(space, shouldHandlePointingDeviceDraggedEvent:event, atPoint:point)
+    point_in_plot_area = @graph.convertPoint(point, toLayer:@graph.plotAreaFrame)
+
+    new_point = Pointer.new(NSDecimal.type, 2)
+    @graph.defaultPlotSpace.plotPoint(new_point, forPlotAreaViewPoint:point_in_plot_area)
+    NSDecimalRound(new_point, new_point, 0, NSRoundPlain)
+    x = NSDecimalNumber.decimalNumberWithDecimal(new_point[0]).intValue
+
+    x = if(x < 0) 
+          0 
+        elsif(x > @sample_data.size)
+          @sample_data.size
+        end
+
+    if (@touch_plot_selected)
+      @selected_coordination = x
+      
+      # if(self.delegate.respond_to?(:indexLocation))
+      self.delegate.indexLocation(self, indexLocation:x)
+
+      @touch_plot.reloadData
+    end
+    true
+  end
+
+  def plotSpace(space, shouldHandlePointingDeviceDownEvent:event, atPoint:point)
+    true
+  end
+
+  def plotSpace(space, shouldHandlePointingDeviceUpEvent:event, atPoint:point)
+    applyTouchPlotColor
+    @touch_plot_selected = false
+    true
+  end
+
+  def scatterPlot(plot, plotSymbolWasSelectedAtRecordIndex:index)
+    if(plot.identifier == "LinePlot")
+
+    end
+  end
+
+  def numberOfRecordsForPlot(plot)
+    (plot.identifier == "LinePlot") ? 3 : @sample_data.size
+  end
+
+  def numberForPlot(plot, field:field_enum, recordIndex:index)
+    if (plot.identifier == "HighPlot")
+      if (field_enum == CPTScatterPlotFieldY) 
+        num = @sample_data[index]
+      elsif (field_enum == CPTScatterPlotFieldX)
+        num = index
+      end
+    elsif (plot.identifier == "LinePlot")
+      if (field_enum == CPTScatterPlotFieldY) 
+        case index
+        when 0
+          num = 0
+        when 2
+          num = 9700
+        else
+          num = @sample_data[@selected_coordination]
+        end
+      elsif(field_enum == CPTScatterPlotFieldX)
+        num = @selected_coordination
+      end
+    end
+
+    num
+  end
 end

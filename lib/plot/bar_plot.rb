@@ -157,7 +157,6 @@ class BarPlot
   def numberForPlot(plot, field:fieldEnum, recordIndex:index)
     return nil if(index == 0)
 
-    p fieldEnum
     num = nil
     if(fieldEnum == CPTBarPlotFieldBarLocation)
       num = index
