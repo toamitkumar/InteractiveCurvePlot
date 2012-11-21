@@ -34,7 +34,7 @@ class LinePlot
     @graph.topDownLayerOrder = @chart_layers
     
     
-    # Add plot space for horizontal bar charts
+    # Add plot space for horizontal line charts
     plot_space = @graph.defaultPlotSpace
     plot_space.delegate = self
     plot_space.allowsUserInteraction = true
@@ -173,6 +173,8 @@ class LinePlot
     @graph.defaultPlotSpace.plotPoint(new_point, forPlotAreaViewPoint:point_in_plot_area)
     NSDecimalRound(new_point, new_point, 0, NSRoundPlain)
     x = NSDecimalNumber.decimalNumberWithDecimal(new_point[0]).intValue
+
+    p x
 
     x = if(x < 0) 
           0 

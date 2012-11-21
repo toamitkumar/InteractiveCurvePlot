@@ -17,7 +17,8 @@
 		1885960E16541511003493A6 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1885960D16541511003493A6 /* Default@2x.png */; };
 		1885961016541511003493A6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1885960F16541511003493A6 /* Default-568h@2x.png */; };
 		1885962116541772003493A6 /* CurvePlotController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1885961F16541772003493A6 /* CurvePlotController.m */; };
-		18D21F54165417D600608ADD /* CurvePlotController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D21F52165417D600608ADD /* CurvePlotController.xib */; };
+		B20EE579165CB74100D0CE44 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = B20EE578165CB74100D0CE44 /* background.png */; };
+		B2BAFB2C165CF16000595232 /* CurvePlotController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2BAFB2B165CF16000595232 /* CurvePlotController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,7 +37,8 @@
 		1885960F16541511003493A6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		1885961F16541772003493A6 /* CurvePlotController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurvePlotController.m; sourceTree = "<group>"; };
 		1885962016541772003493A6 /* CurvePlotController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurvePlotController.h; sourceTree = "<group>"; };
-		18D21F53165417D600608ADD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CurvePlotController.xib; sourceTree = "<group>"; };
+		B20EE578165CB74100D0CE44 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		B2BAFB2B165CF16000595232 /* CurvePlotController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CurvePlotController.xib; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,8 +85,8 @@
 		188595FF16541511003493A6 /* CurvePlot */ = {
 			isa = PBXGroup;
 			children = (
-				18D21F52165417D600608ADD /* CurvePlotController.xib */,
 				1885961F16541772003493A6 /* CurvePlotController.m */,
+				B2BAFB2B165CF16000595232 /* CurvePlotController.xib */,
 				1885962016541772003493A6 /* CurvePlotController.h */,
 				1885960816541511003493A6 /* AppDelegate.h */,
 				1885960916541511003493A6 /* AppDelegate.m */,
@@ -96,6 +98,7 @@
 		1885960016541511003493A6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B20EE578165CB74100D0CE44 /* background.png */,
 				1885960116541511003493A6 /* CurvePlot-Info.plist */,
 				1885960216541511003493A6 /* InfoPlist.strings */,
 				1885960516541511003493A6 /* main.m */,
@@ -162,7 +165,8 @@
 				1885960C16541511003493A6 /* Default.png in Resources */,
 				1885960E16541511003493A6 /* Default@2x.png in Resources */,
 				1885961016541511003493A6 /* Default-568h@2x.png in Resources */,
-				18D21F54165417D600608ADD /* CurvePlotController.xib in Resources */,
+				B20EE579165CB74100D0CE44 /* background.png in Resources */,
+				B2BAFB2C165CF16000595232 /* CurvePlotController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,14 +192,6 @@
 				1885960316541511003493A6 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		18D21F52165417D600608ADD /* CurvePlotController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				18D21F53165417D600608ADD /* en */,
-			);
-			name = CurvePlotController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -256,9 +252,11 @@
 		1885961A16541511003493A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CurvePlot/CurvePlot-Prefix.pch";
 				INFOPLIST_FILE = "CurvePlot/CurvePlot-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -267,9 +265,11 @@
 		1885961B16541511003493A6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CurvePlot/CurvePlot-Prefix.pch";
 				INFOPLIST_FILE = "CurvePlot/CurvePlot-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

@@ -10,4 +10,6 @@
 
 @interface CurvePlotController : UIViewController
 
+@property (nonatomic, retain) IBOutlet CPTGraphHostingView *curve_hosting_view;
+
 @end
