@@ -40,7 +40,7 @@ class CurvePlot
   def numberOfRecordsForPlot(plot)
     if(plot.identifier == "Curve")
       @data.size
-    elsif(plot.identifier == "StaticDot")
+    elsif(%w(DraggableDot StaticDot).include?(plot.identifier))
       1
     end
   end
@@ -53,15 +53,45 @@ class CurvePlot
         num = index
       elsif(plot.identifier == "StaticDot")
         num = 4
+      elsif(plot.identifier == "DraggableDot")
+        num = 3
       end
     when CPTScatterPlotFieldX
       if(plot.identifier == "Curve")
         num = 4 * index * index
       elsif(plot.identifier == "StaticDot")
         num = 64
+      elsif(plot.identifier == "DraggableDot")
+        num = 36
       end
     end
     num
+  end
+
+  # This method is called when user touch & drag on the plot space.
+  def plotSpace(space, shouldHandlePointingDeviceDraggedEvent:event, atPoint:point)
+    point_in_plot_area = @graph.convertPoint(point, toLayer:@graph.plotAreaFrame)
+
+    new_point = Pointer.new(NSDecimal.type, 2)
+    @graph.defaultPlotSpace.plotPoint(new_point, forPlotAreaViewPoint:point_in_plot_area)
+    NSDecimalRound(new_point, new_point, 0, NSRoundPlain)
+    x = NSDecimalNumber.decimalNumberWithDecimal(new_point[0]).intValue
+
+    p x
+
+    true
+  end
+
+  def plotSpace(space, willChangePlotRangeTo:new_range, forCoordinate:coordinate)
+    (coordinate == CPTCoordinateY) ? space.yRange : space.xRange
+  end
+
+  def plotSpace(space, shouldHandlePointingDeviceDownEvent:event, atPoint:point)
+    true
+  end
+
+  def plotSpace(space, shouldHandlePointingDeviceUpEvent:event, atPoint:point)
+    true
   end
 
   private
@@ -77,6 +107,7 @@ class CurvePlot
     plot_space = @graph.defaultPlotSpace
     plot_space.yRange = plot_space_range(0, 6)
     plot_space.xRange = plot_space_range(0, 100)
+    plot_space.allowsUserInteraction = true
   end
 
   def add_x_axis_set
@@ -157,7 +188,22 @@ class CurvePlot
   end
 
   def create_and_add_draggable_dot
+    draggable_dot = CPTScatterPlot.alloc.init
+    draggable_dot.identifier = "DraggableDot"
 
+    draggable_dot_symbol_line_style = CPTMutableLineStyle.lineStyle
+    draggable_dot_symbol_line_style.lineColor = CPTColor.grayColor
+
+    draggable_dot_symbol = CPTPlotSymbol.pentagonPlotSymbol
+    draggable_dot_symbol.fill = CPTFill.fillWithColor(CPTColor.grayColor)
+    draggable_dot_symbol.lineStyle = draggable_dot_symbol_line_style
+    draggable_dot_symbol.size = CGSizeMake(17.0, 17.0)
+    
+    draggable_dot.plotSymbol = draggable_dot_symbol
+    
+    draggable_dot.dataSource = self
+    draggable_dot.delegate = self
+    @graph.addPlot(draggable_dot)
   end
 
 end
