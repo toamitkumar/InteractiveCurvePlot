@@ -1,17 +1,17 @@
 class CurvePlot
 
-  attr_accessor :delegate, :data, :categories, :graph
+  attr_accessor :delegate, :data, :categories, :graph, :draggable_dot, :drag_dot_selected, :dragged_to_x_coordinate
 
   def init
     if(super)
-      @data = (0..10).to_a#.step(0.1).collect{|n| n}
+      @data = (0..5).to_a#.step(0.1).collect{|n| n}
       @categories = []
     end
 
     self
   end
 
-  def render(hosting_view, withTheme:theme)
+  def renderInLayer(hosting_view, withTheme:theme)
     bounds = hosting_view.bounds
 
     # create and assign chart to the hosting view.
@@ -32,7 +32,7 @@ class CurvePlot
     add_x_axis_set
     add_y_axis_set
     create_and_add_plot
-    create_and_add_dot
+    create_and_add_static_dot
     create_and_add_draggable_dot
   end
 
@@ -51,18 +51,28 @@ class CurvePlot
     when CPTScatterPlotFieldY
       if(plot.identifier == "Curve")
         num = index
+        p "Curve Y - #{num}"
       elsif(plot.identifier == "StaticDot")
         num = 4
+        p "Static Y - #{num}"
       elsif(plot.identifier == "DraggableDot")
         num = 3
+        p "Draggable Y - #{num}"
       end
     when CPTScatterPlotFieldX
       if(plot.identifier == "Curve")
         num = 4 * index * index
+        p "Curve X - #{num}"
       elsif(plot.identifier == "StaticDot")
         num = 64
+        p "Static X - #{num}"
       elsif(plot.identifier == "DraggableDot")
-        num = 36
+        if(@drag_dot_selected)
+          num = 4 * @dragged_to_x_coordinate * @dragged_to_x_coordinate
+        else
+          num = 36
+        end
+        p "Draggable X - #{num}"
       end
     end
     num
@@ -70,28 +80,52 @@ class CurvePlot
 
   # This method is called when user touch & drag on the plot space.
   def plotSpace(space, shouldHandlePointingDeviceDraggedEvent:event, atPoint:point)
-    point_in_plot_area = @graph.convertPoint(point, toLayer:@graph.plotAreaFrame)
+    point_in_plot_area = @graph.convertPoint(point, toLayer:@graph.plotAreaFrame.plotArea)
+
+    p point
+    p point.x
+    p point.y
 
     new_point = Pointer.new(NSDecimal.type, 2)
     @graph.defaultPlotSpace.plotPoint(new_point, forPlotAreaViewPoint:point_in_plot_area)
     NSDecimalRound(new_point, new_point, 0, NSRoundPlain)
+    p new_point[0]
+    p new_point[1]
+    p NSDecimalNumber.decimalNumberWithDecimal(new_point[0]).intValue
+    p NSDecimalNumber.decimalNumberWithDecimal(new_point[1]).intValue
     x = NSDecimalNumber.decimalNumberWithDecimal(new_point[0]).intValue
 
     p x
+
+    if(@drag_dot_selected)
+      @dragged_to_x_coordinate = x
+      @draggable_dot.reloadData
+    end
 
     true
   end
 
   def plotSpace(space, willChangePlotRangeTo:new_range, forCoordinate:coordinate)
+    p "called willChangePlotRangeTo"
+
     (coordinate == CPTCoordinateY) ? space.yRange : space.xRange
   end
 
   def plotSpace(space, shouldHandlePointingDeviceDownEvent:event, atPoint:point)
+    @drag_dot_selected = true
     true
   end
 
   def plotSpace(space, shouldHandlePointingDeviceUpEvent:event, atPoint:point)
+    @drag_dot_selected = false
     true
+  end
+
+  def scatterPlot(plot, plotSymbolWasSelectedAtRecordIndex:index)
+    p "plotSymbolWasSelectedAtRecordIndex -- #{index}"
+    if(plot.identifier == "DraggableDot")
+      @drag_dot_selected = true
+    end
   end
 
   private
@@ -108,18 +142,20 @@ class CurvePlot
     plot_space.yRange = plot_space_range(0, 6)
     plot_space.xRange = plot_space_range(0, 100)
     plot_space.allowsUserInteraction = true
+    plot_space.delegate = self
   end
 
   def add_x_axis_set
     x = @graph.axisSet.xAxis
+
     x.title = "X Axis"
     x.labelingPolicy = CPTAxisLabelingPolicyNone
-    x.majorGridLineStyle = nil
+    x.majorGridLineStyle = grid_line
     x.majorIntervalLength = CPTDecimalFromString("10")
     # x.minorTicksPerInterval = nil
 
     x.orthogonalCoordinateDecimal = CPTDecimalFromString("0")
-    x.timeOffset = 30.0
+    # x.timeOffset = 30.0
     x_label_exclusion_range = CPTPlotRange.alloc.init
     x_label_exclusion_range.location = CPTDecimalFromInt(0)
     x_label_exclusion_range.length = CPTDecimalFromInt(0)
@@ -136,9 +172,10 @@ class CurvePlot
 
   def add_y_axis_set
     y = @graph.axisSet.yAxis
-    y.majorGridLineStyle = nil
-    y.majorIntervalLength = CPTDecimalFromString("10")
-    y.minorTicksPerInterval = 1
+
+    y.majorGridLineStyle = grid_line
+    y.majorIntervalLength = CPTDecimalFromString("1")
+    y.minorTicksPerInterval = 0.5
     y.orthogonalCoordinateDecimal = CPTDecimalFromString("0")
     y.title = "Y Axis"
     y_label_exclusion_range = CPTPlotRange.alloc.init
@@ -168,8 +205,8 @@ class CurvePlot
     @graph.addPlot(curve)
   end
 
-  def create_and_add_dot
-    static_dot = CPTScatterPlot.alloc.init
+  def create_and_add_static_dot
+    static_dot = CPTScatterPlot.alloc.initWithFrame(CGRectNull)
     static_dot.identifier = "StaticDot"
 
     static_dot_symbol_line_style = CPTMutableLineStyle.lineStyle
@@ -183,13 +220,13 @@ class CurvePlot
     static_dot.plotSymbol = static_dot_symbol
     
     static_dot.dataSource = self
-    static_dot.delegate = self
+    # static_dot.delegate = self
     @graph.addPlot(static_dot)
   end
 
   def create_and_add_draggable_dot
-    draggable_dot = CPTScatterPlot.alloc.init
-    draggable_dot.identifier = "DraggableDot"
+    @draggable_dot = CPTScatterPlot.alloc.initWithFrame(CGRectNull)
+    @draggable_dot.identifier = "DraggableDot"
 
     draggable_dot_symbol_line_style = CPTMutableLineStyle.lineStyle
     draggable_dot_symbol_line_style.lineColor = CPTColor.grayColor
@@ -199,11 +236,18 @@ class CurvePlot
     draggable_dot_symbol.lineStyle = draggable_dot_symbol_line_style
     draggable_dot_symbol.size = CGSizeMake(17.0, 17.0)
     
-    draggable_dot.plotSymbol = draggable_dot_symbol
+    @draggable_dot.plotSymbol = draggable_dot_symbol
     
-    draggable_dot.dataSource = self
-    draggable_dot.delegate = self
-    @graph.addPlot(draggable_dot)
+    @draggable_dot.dataSource = self
+    @draggable_dot.delegate = self
+    @graph.addPlot(@draggable_dot)
+  end
+
+  def grid_line
+    major_grid_line = CPTMutableLineStyle.lineStyle
+    major_grid_line.lineWidth = 1.0
+    major_grid_line.lineColor = CPTColor.lightGrayColor.colorWithAlphaComponent(0.25)
+    major_grid_line
   end
 
 end
