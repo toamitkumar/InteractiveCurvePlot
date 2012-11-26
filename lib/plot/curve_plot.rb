@@ -1,11 +1,10 @@
 class CurvePlot
 
-  attr_accessor :delegate, :data, :categories, :graph, :draggable_dot, :drag_dot_selected, :dragged_to_x_coordinate
+  attr_accessor :delegate, :data, :categories, :graph, :draggable_point, :drag_point_selected, :dragged_to_y_coordinate, :number_of_series
 
   def init
     if(super)
-      @data = (0..5).to_a#.step(0.1).collect{|n| n}
-      @categories = []
+      @data = (0..10).to_a
     end
 
     self
@@ -31,16 +30,17 @@ class CurvePlot
 
     add_x_axis_set
     add_y_axis_set
+
     create_and_add_plot
-    create_and_add_static_dot
-    create_and_add_draggable_dot
+    create_and_add_static_point
+    create_and_add_draggable_point
   end
 
 
   def numberOfRecordsForPlot(plot)
     if(plot.identifier == "Curve")
       @data.size
-    elsif(%w(DraggableDot StaticDot).include?(plot.identifier))
+    elsif(%w(DraggablePoint StaticPoint).include?(plot.identifier))
       1
     end
   end
@@ -52,23 +52,27 @@ class CurvePlot
       if(plot.identifier == "Curve")
         num = index
         p "Curve Y - #{num}"
-      elsif(plot.identifier == "StaticDot")
+      elsif(plot.identifier == "StaticPoint")
         num = 4
         p "Static Y - #{num}"
-      elsif(plot.identifier == "DraggableDot")
-        num = 3
+      elsif(plot.identifier == "DraggablePoint")
+        if(@drag_point_selected)
+          num = @dragged_to_y_coordinate
+        else
+          num = 3
+        end
         p "Draggable Y - #{num}"
       end
     when CPTScatterPlotFieldX
       if(plot.identifier == "Curve")
         num = 4 * index * index
         p "Curve X - #{num}"
-      elsif(plot.identifier == "StaticDot")
+      elsif(plot.identifier == "StaticPoint")
         num = 64
         p "Static X - #{num}"
-      elsif(plot.identifier == "DraggableDot")
-        if(@drag_dot_selected)
-          num = 4 * @dragged_to_x_coordinate * @dragged_to_x_coordinate
+      elsif(plot.identifier == "DraggablePoint")
+        if(@drag_point_selected)
+          num = 4 * @dragged_to_y_coordinate * @dragged_to_y_coordinate
         else
           num = 36
         end
@@ -82,24 +86,22 @@ class CurvePlot
   def plotSpace(space, shouldHandlePointingDeviceDraggedEvent:event, atPoint:point)
     point_in_plot_area = @graph.convertPoint(point, toLayer:@graph.plotAreaFrame.plotArea)
 
-    p point
-    p point.x
-    p point.y
+    bounds_size = @graph.plotAreaFrame.plotArea.bounds.size
 
-    new_point = Pointer.new(NSDecimal.type, 2)
-    @graph.defaultPlotSpace.plotPoint(new_point, forPlotAreaViewPoint:point_in_plot_area)
-    NSDecimalRound(new_point, new_point, 0, NSRoundPlain)
-    p new_point[0]
-    p new_point[1]
-    p NSDecimalNumber.decimalNumberWithDecimal(new_point[0]).intValue
-    p NSDecimalNumber.decimalNumberWithDecimal(new_point[1]).intValue
-    x = NSDecimalNumber.decimalNumberWithDecimal(new_point[0]).intValue
+    x = point_in_plot_area.x / bounds_size.width
+    x = x * @graph.defaultPlotSpace.xRange.lengthDouble
+    x = x + @graph.defaultPlotSpace.xRange.locationDouble
+
+    y = point_in_plot_area.y / bounds_size.height
+    y = y * @graph.defaultPlotSpace.yRange.lengthDouble
+    y = y + @graph.defaultPlotSpace.yRange.locationDouble
 
     p x
+    p y
 
-    if(@drag_dot_selected)
-      @dragged_to_x_coordinate = x
-      @draggable_dot.reloadData
+    if(@drag_point_selected)
+      @dragged_to_y_coordinate = y
+      @draggable_point.reloadData
     end
 
     true
@@ -112,19 +114,19 @@ class CurvePlot
   end
 
   def plotSpace(space, shouldHandlePointingDeviceDownEvent:event, atPoint:point)
-    @drag_dot_selected = true
+    @drag_point_selected = true
     true
   end
 
   def plotSpace(space, shouldHandlePointingDeviceUpEvent:event, atPoint:point)
-    @drag_dot_selected = false
+    @drag_point_selected = false
     true
   end
 
   def scatterPlot(plot, plotSymbolWasSelectedAtRecordIndex:index)
     p "plotSymbolWasSelectedAtRecordIndex -- #{index}"
-    if(plot.identifier == "DraggableDot")
-      @drag_dot_selected = true
+    if(plot.identifier == "DraggablePoint")
+      @drag_point_selected = true
     end
   end
 
@@ -194,6 +196,7 @@ class CurvePlot
   def create_and_add_plot
     curve = CPTScatterPlot.alloc.init
     curve.identifier = "Curve"
+    curve.interpolation = CPTScatterPlotInterpolationCurved
     curve_line_style = CPTMutableLineStyle.lineStyle
     curve_line_style.lineColor = CPTColor.orangeColor
     curve_line_style.lineWidth = 5.0
@@ -205,42 +208,42 @@ class CurvePlot
     @graph.addPlot(curve)
   end
 
-  def create_and_add_static_dot
-    static_dot = CPTScatterPlot.alloc.initWithFrame(CGRectNull)
-    static_dot.identifier = "StaticDot"
+  def create_and_add_static_point
+    static_point = CPTScatterPlot.alloc.initWithFrame(CGRectNull)
+    static_point.identifier = "StaticPoint"
 
-    static_dot_symbol_line_style = CPTMutableLineStyle.lineStyle
-    static_dot_symbol_line_style.lineColor = CPTColor.orangeColor
+    static_point_symbol_line_style = CPTMutableLineStyle.lineStyle
+    static_point_symbol_line_style.lineColor = CPTColor.orangeColor
 
-    static_dot_symbol = CPTPlotSymbol.ellipsePlotSymbol
-    static_dot_symbol.fill = CPTFill.fillWithColor(CPTColor.orangeColor)
-    static_dot_symbol.lineStyle = static_dot_symbol_line_style
-    static_dot_symbol.size = CGSizeMake(15.0, 15.0)
+    static_point_symbol = CPTPlotSymbol.ellipsePlotSymbol
+    static_point_symbol.fill = CPTFill.fillWithColor(CPTColor.orangeColor)
+    static_point_symbol.lineStyle = static_point_symbol_line_style
+    static_point_symbol.size = CGSizeMake(15.0, 15.0)
     
-    static_dot.plotSymbol = static_dot_symbol
+    static_point.plotSymbol = static_point_symbol
     
-    static_dot.dataSource = self
-    # static_dot.delegate = self
-    @graph.addPlot(static_dot)
+    static_point.dataSource = self
+    # static_point.delegate = self
+    @graph.addPlot(static_point)
   end
 
-  def create_and_add_draggable_dot
-    @draggable_dot = CPTScatterPlot.alloc.initWithFrame(CGRectNull)
-    @draggable_dot.identifier = "DraggableDot"
+  def create_and_add_draggable_point
+    @draggable_point = CPTScatterPlot.alloc.initWithFrame(CGRectNull)
+    @draggable_point.identifier = "DraggablePoint"
 
-    draggable_dot_symbol_line_style = CPTMutableLineStyle.lineStyle
-    draggable_dot_symbol_line_style.lineColor = CPTColor.grayColor
+    draggable_point_symbol_line_style = CPTMutableLineStyle.lineStyle
+    draggable_point_symbol_line_style.lineColor = CPTColor.grayColor
 
-    draggable_dot_symbol = CPTPlotSymbol.pentagonPlotSymbol
-    draggable_dot_symbol.fill = CPTFill.fillWithColor(CPTColor.grayColor)
-    draggable_dot_symbol.lineStyle = draggable_dot_symbol_line_style
-    draggable_dot_symbol.size = CGSizeMake(17.0, 17.0)
+    draggable_point_symbol = CPTPlotSymbol.pentagonPlotSymbol
+    draggable_point_symbol.fill = CPTFill.fillWithColor(CPTColor.grayColor)
+    draggable_point_symbol.lineStyle = draggable_point_symbol_line_style
+    draggable_point_symbol.size = CGSizeMake(17.0, 17.0)
     
-    @draggable_dot.plotSymbol = draggable_dot_symbol
+    @draggable_point.plotSymbol = draggable_point_symbol
     
-    @draggable_dot.dataSource = self
-    @draggable_dot.delegate = self
-    @graph.addPlot(@draggable_dot)
+    @draggable_point.dataSource = self
+    @draggable_point.delegate = self
+    @graph.addPlot(@draggable_point)
   end
 
   def grid_line
