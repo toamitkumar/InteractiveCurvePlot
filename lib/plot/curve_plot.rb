@@ -84,7 +84,16 @@ class CurvePlot
 
   # This method is called when user touch & drag on the plot space.
   def plotSpace(space, shouldHandlePointingDeviceDraggedEvent:event, atPoint:point)
+    p "shouldHandlePointingDeviceDraggedEvent"
     point_in_plot_area = @graph.convertPoint(point, toLayer:@graph.plotAreaFrame.plotArea)
+
+    # p point_in_plot_area
+
+    # new_point = Pointer.new(NSDecimal.type, 2)
+    # @graph.defaultPlotSpace.plotPoint(new_point, forPlotAreaViewPoint:point_in_plot_area)
+    # NSDecimalRound(new_point, new_point, 0, NSRoundPlain)
+    # x = NSDecimalNumber.decimalNumberWithDecimal(new_point[0])
+    # y = NSDecimalNumber.decimalNumberWithDecimal(new_point[1])
 
     bounds_size = @graph.plotAreaFrame.plotArea.bounds.size
 
@@ -114,13 +123,15 @@ class CurvePlot
   end
 
   def plotSpace(space, shouldHandlePointingDeviceDownEvent:event, atPoint:point)
+    p "shouldHandlePointingDeviceDownEvent"
     @drag_point_selected = true
-    true
+    false
   end
 
   def plotSpace(space, shouldHandlePointingDeviceUpEvent:event, atPoint:point)
+    p "shouldHandlePointingDeviceUpEvent"
     @drag_point_selected = false
-    true
+    false
   end
 
   def scatterPlot(plot, plotSymbolWasSelectedAtRecordIndex:index)
@@ -128,6 +139,8 @@ class CurvePlot
     if(plot.identifier == "DraggablePoint")
       @drag_point_selected = true
     end
+
+    true
   end
 
   private
@@ -196,7 +209,7 @@ class CurvePlot
   def create_and_add_plot
     curve = CPTScatterPlot.alloc.init
     curve.identifier = "Curve"
-    curve.interpolation = CPTScatterPlotInterpolationCurved
+    # curve.interpolation = CPTScatterPlotInterpolationCurved
     curve_line_style = CPTMutableLineStyle.lineStyle
     curve_line_style.lineColor = CPTColor.orangeColor
     curve_line_style.lineWidth = 5.0

@@ -2,18 +2,18 @@
 
 #import "CPTGradient.h"
 
-/// @cond
+///	@cond
 @interface _CPTFillGradient()
 
 @property (nonatomic, readwrite, copy) CPTGradient *fillGradient;
 
 @end
 
-/// @endcond
+///	@endcond
 
 /** @brief Draws CPTGradient area fills.
  *
- *  Drawing methods are provided to fill rectangular areas and arbitrary drawing paths.
+ *	Drawing methods are provided to fill rectangular areas and arbitrary drawing paths.
  **/
 
 @implementation _CPTFillGradient
@@ -24,7 +24,7 @@
 @synthesize fillGradient;
 
 #pragma mark -
-#pragma mark Init/Dealloc
+#pragma mark init/dealloc
 
 /** @brief Initializes a newly allocated _CPTFillGradient object with the provided gradient.
  *  @param aGradient The gradient.
@@ -32,82 +32,70 @@
  **/
 -(id)initWithGradient:(CPTGradient *)aGradient
 {
-    if ( (self = [super init]) ) {
-        fillGradient = [aGradient retain];
-    }
-    return self;
+	if ( (self = [super init]) ) {
+		fillGradient = [aGradient retain];
+	}
+	return self;
 }
-
-/// @cond
 
 -(void)dealloc
 {
-    [fillGradient release];
+	[fillGradient release];
 
-    [super dealloc];
+	[super dealloc];
 }
-
-/// @endcond
 
 #pragma mark -
 #pragma mark Drawing
 
 /** @brief Draws the gradient into the given graphics context inside the provided rectangle.
- *  @param rect The rectangle to draw into.
- *  @param context The graphics context to draw into.
+ *  @param theRect The rectangle to draw into.
+ *  @param theContext The graphics context to draw into.
  **/
--(void)fillRect:(CGRect)rect inContext:(CGContextRef)context
+-(void)fillRect:(CGRect)theRect inContext:(CGContextRef)theContext
 {
-    [self.fillGradient fillRect:rect inContext:context];
+	[self.fillGradient fillRect:theRect inContext:theContext];
 }
 
 /** @brief Draws the gradient into the given graphics context clipped to the current drawing path.
- *  @param context The graphics context to draw into.
+ *  @param theContext The graphics context to draw into.
  **/
--(void)fillPathInContext:(CGContextRef)context
+-(void)fillPathInContext:(CGContextRef)theContext
 {
-    [self.fillGradient fillPathInContext:context];
+	[self.fillGradient fillPathInContext:theContext];
 }
 
 #pragma mark -
-#pragma mark NSCopying Methods
-
-/// @cond
+#pragma mark NSCopying methods
 
 -(id)copyWithZone:(NSZone *)zone
 {
-    _CPTFillGradient *copy = [[[self class] allocWithZone:zone] init];
+	_CPTFillGradient *copy = [[[self class] allocWithZone:zone] init];
 
-    copy->fillGradient = [self->fillGradient copyWithZone:zone];
+	copy->fillGradient = [self->fillGradient copyWithZone:zone];
 
-    return copy;
+	return copy;
 }
 
-/// @endcond
-
 #pragma mark -
-#pragma mark NSCoding Methods
-
-/// @cond
+#pragma mark NSCoding methods
 
 -(Class)classForCoder
 {
-    return [CPTFill class];
+	return [CPTFill class];
 }
 
 -(void)encodeWithCoder:(NSCoder *)coder
 {
-    [coder encodeObject:self.fillGradient forKey:@"_CPTFillGradient.fillGradient"];
+	[coder encodeObject:self.fillGradient forKey:@"_CPTFillGradient.fillGradient"];
 }
 
 -(id)initWithCoder:(NSCoder *)coder
 {
-    if ( (self = [super init]) ) {
-        fillGradient = [[coder decodeObjectForKey:@"_CPTFillGradient.fillGradient"] retain];
-    }
-    return self;
+	if ( (self = [super init]) ) {
+		fillGradient = [[coder decodeObjectForKey:@"_CPTFillGradient.fillGradient"] retain];
+	}
+	return self;
 }
-
-/// @endcond
 
 @end

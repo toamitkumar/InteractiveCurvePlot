@@ -2,19 +2,19 @@
 #import <Foundation/Foundation.h>
 
 @interface _CPTFillColor : CPTFill<NSCopying, NSCoding> {
-    @private
-    CPTColor *fillColor;
+	@private
+	CPTColor *fillColor;
 }
 
 /// @name Initialization
 /// @{
 -(id)initWithColor:(CPTColor *)aCcolor;
-/// @}
+///	@}
 
 /// @name Drawing
 /// @{
--(void)fillRect:(CGRect)rect inContext:(CGContextRef)context;
--(void)fillPathInContext:(CGContextRef)context;
-/// @}
+-(void)fillRect:(CGRect)theRect inContext:(CGContextRef)theContext;
+-(void)fillPathInContext:(CGContextRef)theContext;
+///	@}
 
 @end

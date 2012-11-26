@@ -13,6 +13,5 @@
 @property (nonatomic, readwrite, retain) NSArray *dashPattern;
 @property (nonatomic, readwrite, assign) CGFloat patternPhase;
 @property (nonatomic, readwrite, retain) CPTColor *lineColor;
-@property (nonatomic, readwrite, retain) CPTFill *lineFill;
 
 @end

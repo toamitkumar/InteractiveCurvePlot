@@ -4,19 +4,19 @@
 @class CPTGradient;
 
 @interface _CPTFillGradient : CPTFill<NSCopying, NSCoding> {
-    @private
-    CPTGradient *fillGradient;
+	@private
+	CPTGradient *fillGradient;
 }
 
 /// @name Initialization
 /// @{
 -(id)initWithGradient:(CPTGradient *)aGradient;
-/// @}
+///	@}
 
 /// @name Drawing
 /// @{
--(void)fillRect:(CGRect)rect inContext:(CGContextRef)context;
--(void)fillPathInContext:(CGContextRef)context;
-/// @}
+-(void)fillRect:(CGRect)theRect inContext:(CGContextRef)theContext;
+-(void)fillPathInContext:(CGContextRef)theContext;
+///	@}
 
 @end

@@ -9,22 +9,22 @@
 
 @implementation CPTMutableTextStyle
 
-/** @property CGFloat fontSize
- *  @brief The font size. Default is @num{12.0}.
+/** @property fontSize
+ *  @brief The font size. Default is 12.0.
  **/
 @dynamic fontSize;
 
-/** @property NSString *fontName
- *  @brief The font name. Default is Helvetica.
+/** @property fontName
+ *  @brief The font name. Default is "Helvetica".
  **/
 @dynamic fontName;
 
-/** @property CPTColor *color
+/** @property color
  *  @brief The current text color. Default is solid black.
  **/
 @dynamic color;
 
-/** @property CPTTextAlignment textAlignment
+/** @property textAlignment
  *  @brief The paragraph alignment for multi-line text. Default is #CPTTextAlignmentLeft.
  **/
 @dynamic textAlignment;
