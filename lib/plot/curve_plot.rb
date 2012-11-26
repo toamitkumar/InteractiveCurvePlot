@@ -62,19 +62,12 @@ class CurvePlot
       p plot.identifier
       curve = @curves.select{|c| ("Curve_#{c[:name]}" == plot.identifier)}.first
       curve[:data].size
-    # if(plot.identifier == "Curve")
-    #   @data.size
-    # elsif(%w(DraggablePoint StaticPoint).include?(plot.identifier))
-    #   1
-    # end
     end
   end
 
   def numberForPlot(plot, field:field_enum, recordIndex:index)
     num = nil
     curve = @curves.select{|c| ("Curve_#{c[:name]}" == plot.identifier or "StaticPoint_#{c[:name]}" == plot.identifier or "DraggablePoint_#{c[:name]}" == plot.identifier)}.first
-    p plot.identifier
-    p curve[:fn]
 
     case field_enum
     when CPTScatterPlotFieldY
@@ -102,72 +95,40 @@ class CurvePlot
         end
       end
     end
-
-
-    # case field_enum
-    # when CPTScatterPlotFieldY
-    #   if(plot.identifier == "Curve")
-    #     num = index
-    #     p "Curve Y - #{num}"
-    #   elsif(plot.identifier == "StaticPoint")
-    #     num = 4
-    #     p "Static Y - #{num}"
-    #   elsif(plot.identifier == "DraggablePoint")
-    #     if(@drag_point_selected)
-    #       num = @dragged_to_y_coordinate
-    #     else
-    #       num = 3
-    #     end
-    #     p "Draggable Y - #{num}"
-    #   end
-    # when CPTScatterPlotFieldX
-    #   if(plot.identifier == "Curve")
-    #     num = 4 * index * index
-    #     p "Curve X - #{num}"
-    #   elsif(plot.identifier == "StaticPoint")
-    #     num = 64
-    #     p "Static X - #{num}"
-    #   elsif(plot.identifier == "DraggablePoint")
-    #     if(@drag_point_selected)
-    #       num = 4 * @dragged_to_y_coordinate * @dragged_to_y_coordinate
-    #     else
-    #       num = 36
-    #     end
-    #     p "Draggable X - #{num}"
-    #   end
-    # end
     num
   end
 
   # This method is called when user touch & drag on the plot space.
   def plotSpace(space, shouldHandlePointingDeviceDraggedEvent:event, atPoint:point)
     p "shouldHandlePointingDeviceDraggedEvent"
-    point_in_plot_area = @graph.convertPoint(point, toLayer:@graph.plotAreaFrame.plotArea)
+    if(@drag_start and @drag_point_selected)
+      point_in_plot_area = @graph.convertPoint(point, toLayer:@graph.plotAreaFrame.plotArea)
 
-    # p point_in_plot_area
+      # p point_in_plot_area
 
-    # new_point = Pointer.new(NSDecimal.type, 2)
-    # @graph.defaultPlotSpace.plotPoint(new_point, forPlotAreaViewPoint:point_in_plot_area)
-    # NSDecimalRound(new_point, new_point, 0, NSRoundPlain)
-    # x = NSDecimalNumber.decimalNumberWithDecimal(new_point[0])
-    # y = NSDecimalNumber.decimalNumberWithDecimal(new_point[1])
+      # new_point = Pointer.new(NSDecimal.type, 2)
+      # @graph.defaultPlotSpace.plotPoint(new_point, forPlotAreaViewPoint:point_in_plot_area)
+      # NSDecimalRound(new_point, new_point, 0, NSRoundPlain)
+      # x = NSDecimalNumber.decimalNumberWithDecimal(new_point[0])
+      # y = NSDecimalNumber.decimalNumberWithDecimal(new_point[1])
 
-    bounds_size = @graph.plotAreaFrame.plotArea.bounds.size
+      bounds_size = @graph.plotAreaFrame.plotArea.bounds.size
 
-    x = point_in_plot_area.x / bounds_size.width
-    x = x * @graph.defaultPlotSpace.xRange.lengthDouble
-    x = x + @graph.defaultPlotSpace.xRange.locationDouble
+      x = point_in_plot_area.x / bounds_size.width
+      x = x * @graph.defaultPlotSpace.xRange.lengthDouble
+      x = x + @graph.defaultPlotSpace.xRange.locationDouble
 
-    y = point_in_plot_area.y / bounds_size.height
-    y = y * @graph.defaultPlotSpace.yRange.lengthDouble
-    y = y + @graph.defaultPlotSpace.yRange.locationDouble
+      y = point_in_plot_area.y / bounds_size.height
+      y = y * @graph.defaultPlotSpace.yRange.lengthDouble
+      y = y + @graph.defaultPlotSpace.yRange.locationDouble
 
-    p x
-    p y
+      p x
+      p y
 
-    if(@drag_start)
-      @dragged_to_y_coordinate = y
-      @drag_point_selected.reloadData
+      # if(@drag_start)
+        @dragged_to_y_coordinate = y
+        @drag_point_selected.reloadData
+      # end
     end
 
     true
@@ -182,12 +143,14 @@ class CurvePlot
   def plotSpace(space, shouldHandlePointingDeviceDownEvent:event, atPoint:point)
     p "shouldHandlePointingDeviceDownEvent"
     @drag_start = true
+    @drag_point_selected = nil
     false
   end
 
   def plotSpace(space, shouldHandlePointingDeviceUpEvent:event, atPoint:point)
     p "shouldHandlePointingDeviceUpEvent"
     @drag_start = false
+    @drag_point_selected = nil
     false
   end
 
