@@ -11,5 +11,6 @@
 @interface CurvePlotController : UIViewController
 
 @property (nonatomic, retain) IBOutlet CPTGraphHostingView *curve_hosting_view;
+@property (nonatomic, retain) IBOutlet UISlider *horizontal_zoom;
 
 @end
