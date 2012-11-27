@@ -54,6 +54,15 @@ class CurvePlot
     create_and_add_draggable_point
   end
 
+  def zoom_x_by(percent)
+    space = @graph.defaultPlotSpace
+    new_x_range = space.xRange.mutableCopy
+    p new_x_range.lengthDouble
+    new_x_range.setLength(CPTDecimalFromDouble(new_x_range.lengthDouble - percent))
+    p new_x_range.lengthDouble
+    space.xRange  = new_x_range
+  end
+
 
   def numberOfRecordsForPlot(plot)
     if(plot.identifier =~ /DraggablePoint/ or plot.identifier =~ /StaticPoint/)
