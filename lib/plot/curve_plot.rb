@@ -109,7 +109,6 @@ class CurvePlot
 
   # This method is called when user touch & drag on the plot space.
   def plotSpace(space, shouldHandlePointingDeviceDraggedEvent:event, atPoint:point)
-    p "shouldHandlePointingDeviceDraggedEvent"
     if(@drag_start and @drag_point_selected)
       point_in_plot_area = @graph.convertPoint(point, toLayer:@graph.plotAreaFrame.plotArea)
 
@@ -130,9 +129,6 @@ class CurvePlot
       y = point_in_plot_area.y / bounds_size.height
       y = y * @graph.defaultPlotSpace.yRange.lengthDouble
       y = y + @graph.defaultPlotSpace.yRange.locationDouble
-
-      p x
-      p y
 
       # if(@drag_start)
         @dragged_to_y_coordinate = y

@@ -22,6 +22,4 @@ Motion::Project::App.setup do |app|
 
 
   app.files.unshift(Dir.glob("./lib/**/*.rb"))
-
-  app.vendor_project("vendor/Accordion", :static)
 end

@@ -547,6 +547,9 @@
 	NSDecimalMultiply(&y, &y, &(yLength), NSRoundPlain);
 	NSDecimalAdd(&y, &y, &(yLocation), NSRoundPlain);
 
+NSLog(@"x -> %@", NSDecimalString(&x, nil));
+NSLog(@"y -> %@", NSDecimalString(&y, nil));
+
 	plotPoint[CPTCoordinateX] = x;
 	plotPoint[CPTCoordinateY] = y;
 }

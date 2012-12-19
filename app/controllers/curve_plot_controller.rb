@@ -12,11 +12,14 @@ class CurvePlotController < UIViewController
     @horizontal_zoom.value = 0
 
     p @curve_hosting_view.layer.zPosition
-    self.view.bringSubviewToFront(@curve_hosting_view)
+    # self.view.bringSubviewToFront(@curve_hosting_view)
 
     @legend = LegendView.alloc.initWithFrame(CGRectMake(703, 182, 301, 424))
     @legend.backgroundColor = UIColor.whiteColor
     @legend.add([])
+
+    # button = UIButton.alloc.initWithFrame([[703, 182], [200, 100]])
+    # self.view.addSubview(button)
 
     self.view.addSubview(@legend)
 

@@ -1,6 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    accordion_view (0.0.1)
+      bubble-wrap
     activesupport (3.2.8)
       i18n (~> 0.6)
       multi_json (~> 1.0)
@@ -44,6 +46,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  accordion_view
   bubble-wrap
   cocoapods (= 0.13.0)
   motion-cocoapods (~> 1.1.2)
