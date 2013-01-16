@@ -1,1 +1,7 @@
-../../CorePlot/framework/Source/CPTAxisTitle.h
+#import "CPTAxisLabel.h"
+#import <Foundation/Foundation.h>
+
+@interface CPTAxisTitle : CPTAxisLabel {
+}
+
+@end

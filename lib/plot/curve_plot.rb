@@ -247,7 +247,10 @@ class CurvePlot
 
       curve.dataSource = self
       curve.delegate = self
+      curve.opacity = 0
+
       @graph.addPlot(curve)
+      add_animation_for(curve)
     end
   end
 
@@ -300,6 +303,15 @@ class CurvePlot
     major_grid_line.lineWidth = 1.0
     major_grid_line.lineColor = CPTColor.lightGrayColor.colorWithAlphaComponent(0.25)
     major_grid_line
+  end
+
+  def add_animation_for(curve)
+    fade_in_animation = CABasicAnimation.animationWithKeyPath("opacity")
+    fade_in_animation.duration = 3.0
+    fade_in_animation.removedOnCompletion = false
+    fade_in_animation.fillMode = KCAFillModeForwards
+    fade_in_animation.toValue = 1
+    curve.addAnimation(fade_in_animation, forKey:"animateOpacity")
   end
 
 end
