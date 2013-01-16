@@ -28,14 +28,16 @@ class AppDelegate
 
     brand = @brands[0]
 
-    brand.levers << Lever.create(:name => @lever_names[0], :color => "A2AD01".to_color)
-    brand.levers << Lever.create(:name => @lever_names[1], :color => "E47C33".to_color)
-    brand.levers << Lever.create(:name => @lever_names[0], :color => "CF2A35".to_color)
-    brand.levers << Lever.create(:name => @lever_names[0], :color => "006600".to_color)
-    brand.levers << Lever.create(:name => @lever_names[0], :color => "370066".to_color)
-    brand.levers << Lever.create(:name => @lever_names[0], :color => "1EB4B8".to_color)
-    brand.levers << Lever.create(:name => @lever_names[0], :color => "E47C33".to_color)
-    brand.levers << Lever.create(:name => @lever_names[0], :color => "1CA4EE".to_color)
+    p brand.levers
+
+    brand.levers << Lever.create(:name => @lever_names[0], :color => "A2AD01")
+    brand.levers << Lever.create(:name => @lever_names[1], :color => "E47C33")
+    brand.levers << Lever.create(:name => @lever_names[0], :color => "CF2A35")
+    brand.levers << Lever.create(:name => @lever_names[0], :color => "006600")
+    brand.levers << Lever.create(:name => @lever_names[0], :color => "370066")
+    brand.levers << Lever.create(:name => @lever_names[0], :color => "1EB4B8")
+    brand.levers << Lever.create(:name => @lever_names[0], :color => "E47C33")
+    brand.levers << Lever.create(:name => @lever_names[0], :color => "1CA4EE")
 
   end
 
