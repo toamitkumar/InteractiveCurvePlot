@@ -4,7 +4,7 @@ class LegendView < UIView
 
   def add(legends)
 
-    @accordion = Accordion.alloc.initWithFrame([[10, 10], [self.frame.size.width-10, self.frame.size.height-10]])
+    @accordion = Accordion.alloc.initWithFrame([[5, 5], [self.frame.size.width-10, self.frame.size.height-10]])
 
     self.addSubview(@accordion)
 

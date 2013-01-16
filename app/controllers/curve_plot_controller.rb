@@ -10,8 +10,10 @@ class CurvePlotController < UIViewController
     @plot.delegate = self
     @plot.renderInLayer(@curve_hosting_view, withTheme:theme)
     @horizontal_zoom.value = 0
+    @curve_hosting_view.round_corners(8)
 
     @legend_view.add(["TV", "Umbrella TV", "OOH", "Display", "Facebook", "Umbrella Viral FB", "Positive Social GRP"])
+    @legend_view.round_corners(8)
     self.view.addSubview(@legend)
   end
 

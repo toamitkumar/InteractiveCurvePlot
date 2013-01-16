@@ -18,6 +18,7 @@ Motion::Project::App.setup do |app|
 
   app.pods do
     pod "CorePlot"
+    pod 'NanoStore', '~> 2.5.3'
   end
 
 
