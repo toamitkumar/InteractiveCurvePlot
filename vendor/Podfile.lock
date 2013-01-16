@@ -1,5 +1,8 @@
 PODS:
   - CorePlot (1.1)
+  - NanoStore (2.1.8)
 
 DEPENDENCIES:
   - CorePlot
+  - NanoStore (~> 2.1.4)
+  - NanoStore (~> 2.5.3)

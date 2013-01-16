@@ -1,5 +1,7 @@
-class Lever
+class Lever < NanoStore::Model
 
-  attr_accessor :name, :kind
+  attribute :name
+  attribute :kind
+  attribute :color
 
 end
