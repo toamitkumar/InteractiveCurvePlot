@@ -1,6 +1,6 @@
 class CurvePlotController < UIViewController
 
-  attr_accessor :curve_hosting_view, :plot, :horizontal_zoom, :legend_view
+  attr_accessor :curve_hosting_view, :plot, :horizontal_zoom, :legend_view, :vertical_zoom
 
   def viewDidLoad
     super
@@ -12,9 +12,13 @@ class CurvePlotController < UIViewController
     @horizontal_zoom.value = 0
     @curve_hosting_view.round_corners(8)
 
-    @legend_view.add(["TV", "Umbrella TV", "OOH", "Display", "Facebook", "Umbrella Viral FB", "Positive Social GRP"])
+    @legend_view.add(lever_names)
     @legend_view.round_corners(8)
     self.view.addSubview(@legend)
+
+    trans = CGAffineTransformMakeRotation(Math::PI * 0.5)
+    # @vertical_zoom.value = 0
+    # @vertical_zoom.transform = trans
   end
 
   def shouldAutorotateToInterfaceOrientation(toInterfaceOrientation)
@@ -31,6 +35,12 @@ class CurvePlotController < UIViewController
     @brands = App.delegate.instance_variable_get(:@brands)
 
     @brands[0].curves
+  end
+
+  def lever_names
+    @brands = App.delegate.instance_variable_get(:@brands)
+
+    @brands[0].levers.collect(&:name)
   end
 
 end

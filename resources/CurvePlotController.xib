@@ -78,7 +78,6 @@
 						<string key="NSFrame">{{18, 698}, {661, 23}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -104,7 +103,7 @@
 							<object class="IBUIView" id="170539087">
 								<reference key="NSNextResponder" ref="23346376"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{20, 20}, {657, 491}}</string>
+								<string key="NSFrame">{{20, 20}, {631, 491}}</string>
 								<reference key="NSSuperview" ref="23346376"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="529347184"/>
@@ -119,7 +118,7 @@
 							<object class="IBUIView" id="529347184">
 								<reference key="NSNextResponder" ref="23346376"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{685, 20}, {279, 491}}</string>
+								<string key="NSFrame">{{659, 20}, {279, 491}}</string>
 								<reference key="NSSuperview" ref="23346376"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="752590391"/>
@@ -131,7 +130,7 @@
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 							</object>
 						</array>
-						<string key="NSFrame">{{20, 152}, {984, 531}}</string>
+						<string key="NSFrame">{{46, 152}, {958, 531}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -143,6 +142,19 @@
 							</object>
 						</object>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+					</object>
+					<object class="IBUISlider" id="1010626938">
+						<reference key="NSNextResponder" ref="191373211"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{-50, 407}, {118, 23}}</string>
+						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="IBUIOpaque">NO</bool>
+						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+						<int key="IBUIContentHorizontalAlignment">0</int>
+						<int key="IBUIContentVerticalAlignment">0</int>
+						<float key="IBUIValue">0.5</float>
 					</object>
 				</array>
 				<string key="NSFrame">{{0, 20}, {1024, 748}}</string>
@@ -206,6 +218,15 @@
 					</object>
 					<int key="connectionID">13</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">zoom_y:</string>
+						<reference key="source" ref="1010626938"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">13</int>
+					</object>
+					<int key="connectionID">28</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -222,6 +243,7 @@
 							<reference ref="311441840"/>
 							<reference ref="752590391"/>
 							<reference ref="23346376"/>
+							<reference ref="1010626938"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -258,12 +280,18 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">4</int>
 						<reference key="object" ref="170539087"/>
+						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="23346376"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">18</int>
 						<reference key="object" ref="529347184"/>
 						<reference key="parent" ref="23346376"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">27</int>
+						<reference key="object" ref="1010626938"/>
+						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>
 			</object>
@@ -276,6 +304,7 @@
 				<string key="18.CustomClassName">LegendView</string>
 				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="26.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="27.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.CustomClassName">CPTGraphHostingView</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -285,28 +314,32 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">26</int>
+			<int key="maxID">28</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">CurvePlotController</string>
 					<string key="superclassName">UIViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">zoom_x:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">zoom_x:</string>
-						<object class="IBActionInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="zoom_x:">id</string>
+						<string key="zoom_y:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="zoom_x:">
 							<string key="name">zoom_x:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</object>
+						<object class="IBActionInfo" key="zoom_y:">
+							<string key="name">zoom_y:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="curve_hosting_view">CPTGraphHostingView</string>
 						<string key="horizontal_zoom">UISlider</string>
 						<string key="legend_view">LegendView</string>
+						<string key="vertical_zoom">UISlider</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="curve_hosting_view">
@@ -320,6 +353,10 @@
 						<object class="IBToOneOutletInfo" key="legend_view">
 							<string key="name">legend_view</string>
 							<string key="candidateClassName">LegendView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="vertical_zoom">
+							<string key="name">vertical_zoom</string>
+							<string key="candidateClassName">UISlider</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

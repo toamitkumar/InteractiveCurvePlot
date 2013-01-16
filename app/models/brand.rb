@@ -8,7 +8,6 @@ class Brand < NanoStore::Model
   # bag :levers
 
   def self.create(data)
-    p "called"
     object = super
 
     object.levers = []
@@ -19,12 +18,30 @@ class Brand < NanoStore::Model
     start = 0
     levers.collect do |lever|
       start += 1
+      func = case start
+      when 1
+        lambda {|p| 0.5 * p * p}
+      when 2
+        lambda {|p| 1.5 * p * p}
+      when 3
+        lambda {|p| 3.0 * p * p}
+      when 4
+        lambda {|p| 4.5 * p * p}
+      when 5
+        lambda {|p| 6.0 * p * p}
+      when 6
+        lambda {|p| 7.5 * p * p}
+      when 7
+        lambda {|p| 9.0 * p * p}
+      when 8
+        lambda {|p| 10.5 * p * p}
+      end
       {
         :name => lever.name,
         :color => lever.color.to_color.to_cpt_color,
-        :static_point => start,
-        :draggable_point => start+1,
-        :fn => lambda {|p| 0.5 * p * p},
+        :static_point => 1,
+        :draggable_point => 2,
+        :fn => func,
         :data => (0..10).to_a
       }
     end

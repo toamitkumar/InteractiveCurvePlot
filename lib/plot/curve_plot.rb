@@ -71,7 +71,6 @@ class CurvePlot
     if(plot.identifier =~ /DraggablePoint/ or plot.identifier =~ /StaticPoint/)
       1
     else
-      p plot.identifier
       curve = @curves.select{|c| ("Curve_#{c[:name]}" == plot.identifier)}.first
       curve[:data].size
     end
@@ -177,10 +176,10 @@ class CurvePlot
   private
 
   def add_padding
-    @graph.paddingLeft = 90.0
-    @graph.paddingTop = 50.0
+    @graph.paddingLeft = 50.0
+    @graph.paddingTop = 30.0
     @graph.paddingRight = 20.0
-    @graph.paddingBottom = 60.0
+    @graph.paddingBottom = 30.0
   end
 
   def add_plot_space
@@ -223,7 +222,7 @@ class CurvePlot
     y.majorIntervalLength = CPTDecimalFromString("1")
     y.minorTicksPerInterval = 0.5
     y.orthogonalCoordinateDecimal = CPTDecimalFromString("0")
-    y.title = "Y Axis"
+    # y.title = "Y Axis"
     y_label_exclusion_range = CPTPlotRange.alloc.init
     y_label_exclusion_range.location = CPTDecimalFromInt(0)
     y_label_exclusion_range.length = CPTDecimalFromInt(0)
