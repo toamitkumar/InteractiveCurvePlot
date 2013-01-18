@@ -57,11 +57,24 @@ class CurvePlot
     create_and_add_draggable_point
   end
 
-  def zoom_x_by(percent)
+  def zoom_in_x_by(percent)
+    space = @graph.defaultPlotSpace
+    new_x_range = space.xRange.mutableCopy
+    # p new_x_range.lengthDouble
+    p percent
+    p (new_x_range.lengthDouble - (new_x_range.lengthDouble * percent))
+    new_x_range.setLength(CPTDecimalFromDouble(new_x_range.lengthDouble - (new_x_range.lengthDouble * percent)))
+    # p new_x_range.lengthDouble
+    space.xRange  = new_x_range
+  end
+
+  def zoom_out_x_by(percent)
     space = @graph.defaultPlotSpace
     new_x_range = space.xRange.mutableCopy
     p new_x_range.lengthDouble
-    new_x_range.setLength(CPTDecimalFromDouble(new_x_range.lengthDouble - percent))
+    p percent
+    p (new_x_range.lengthDouble + (new_x_range.lengthDouble * percent))
+    new_x_range.setLength(CPTDecimalFromDouble(p (new_x_range.lengthDouble + (new_x_range.lengthDouble * percent))))
     p new_x_range.lengthDouble
     space.xRange  = new_x_range
   end
@@ -185,7 +198,7 @@ class CurvePlot
   def add_plot_space
     plot_space = @graph.defaultPlotSpace
     plot_space.yRange = plot_space_range(0, 6)
-    plot_space.xRange = plot_space_range(0, 100)
+    plot_space.xRange = plot_space_range(0, 10)
     plot_space.allowsUserInteraction = true
     plot_space.delegate = self
   end

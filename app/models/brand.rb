@@ -22,17 +22,17 @@ class Brand < NanoStore::Model
       when 1
         lambda {|p| 0.5 * p * p}
       when 2
-        lambda {|p| 1.5 * p * p}
+        lambda {|p| 5 * p * p}
       when 3
         lambda {|p| 3.0 * p * p}
       when 4
-        lambda {|p| 4.5 * p * p}
+        lambda {|p| 7 * p * p}
       when 5
-        lambda {|p| 6.0 * p * p}
+        lambda {|p| p * p}
       when 6
-        lambda {|p| 7.5 * p * p}
+        lambda {|p| 0.1 * p * p}
       when 7
-        lambda {|p| 9.0 * p * p}
+        lambda {|p| 1}
       when 8
         lambda {|p| 10.5 * p * p}
       end

@@ -17,7 +17,7 @@
 		1885960E16541511003493A6 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1885960D16541511003493A6 /* Default@2x.png */; };
 		1885961016541511003493A6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1885960F16541511003493A6 /* Default-568h@2x.png */; };
 		1885962116541772003493A6 /* CurvePlotController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1885961F16541772003493A6 /* CurvePlotController.m */; };
-		B20EE579165CB74100D0CE44 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = B20EE578165CB74100D0CE44 /* background.png */; };
+		B2736DC016A95A0600182061 /* bkgd_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = B2736DBF16A95A0600182061 /* bkgd_gray.png */; };
 		B2BAFB2C165CF16000595232 /* CurvePlotController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2BAFB2B165CF16000595232 /* CurvePlotController.xib */; };
 /* End PBXBuildFile section */
 
@@ -37,7 +37,7 @@
 		1885960F16541511003493A6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		1885961F16541772003493A6 /* CurvePlotController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurvePlotController.m; sourceTree = "<group>"; };
 		1885962016541772003493A6 /* CurvePlotController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurvePlotController.h; sourceTree = "<group>"; };
-		B20EE578165CB74100D0CE44 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		B2736DBF16A95A0600182061 /* bkgd_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bkgd_gray.png; path = ../../../resources/bkgd_gray.png; sourceTree = "<group>"; };
 		B2BAFB2B165CF16000595232 /* CurvePlotController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CurvePlotController.xib; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -98,7 +98,7 @@
 		1885960016541511003493A6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				B20EE578165CB74100D0CE44 /* background.png */,
+				B2736DBF16A95A0600182061 /* bkgd_gray.png */,
 				1885960116541511003493A6 /* CurvePlot-Info.plist */,
 				1885960216541511003493A6 /* InfoPlist.strings */,
 				1885960516541511003493A6 /* main.m */,
@@ -165,8 +165,8 @@
 				1885960C16541511003493A6 /* Default.png in Resources */,
 				1885960E16541511003493A6 /* Default@2x.png in Resources */,
 				1885961016541511003493A6 /* Default-568h@2x.png in Resources */,
-				B20EE579165CB74100D0CE44 /* background.png in Resources */,
 				B2BAFB2C165CF16000595232 /* CurvePlotController.xib in Resources */,
+				B2736DC016A95A0600182061 /* bkgd_gray.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
